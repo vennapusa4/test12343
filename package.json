@@ -18,7 +18,10 @@
     "dependencies": {
         "botbuilder": "~4.6.1",
         "dotenv": "^8.2.0",
-        "restify": "~8.4.0"
+        "mongoose": "^5.8.11",
+        "natural": "^0.6.3",
+        "restify": "~8.4.0",
+        "test422": "^1.0.2"
     },
     "devDependencies": {
         "eslint": "^6.6.0",
