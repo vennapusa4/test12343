@@ -4,14 +4,16 @@
 const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
-
+const classifier=require('./services/classifier')
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-const { BotFrameworkAdapter } = require('botbuilder');
-
+const { BotFrameworkAdapter,UserState, MemoryStorage } = require('botbuilder');
+console.log(classifier('G10 revenue for PIMCO in 2019'));
 // This bot's main dialog.
-const { EchoBot } = require('./bot');
-
+const { EchoBot } = require('./bots/bot');
+const {SuggestedActionsBot}=require("./bots/suggestedActionsBot")
+const memoryStorage = new MemoryStorage();
+const userState = new UserState(memoryStorage);
 // Import required bot configuration.
 const ENV_FILE = path.join(__dirname, '.env');
 dotenv.config({ path: ENV_FILE });
