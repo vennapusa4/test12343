@@ -20,16 +20,18 @@ getRevenue = async (sel) => {
     var years = sel.selectedYear.split(",").map(Number).filter(Boolean);
     var products = sel.selectedProduct.split(",").filter(Boolean);
     var aggregate = [
-    { $match: { AccountName: sel.selectedAccount } },
+        sel.selectedAccount!=""?{ $match: { AccountName: sel.selectedAccount } }:null,
     { $unwind: '$data' },
     years.length ? { $match: { "data.Year": { $in: years } } } : null,
     products.length ? { $match: { "data.Name": { $in: products } } } : null,
     { $group: { _id: '$_id', data: { $push: '$data' } } }].filter(Boolean);
-    var data = await mongoose.model('revenues').aggregate(aggregate)
-    return {
-        revenue: getSum(data[0].data, "Value"),
-        volume: getSum(data[0].data, "Volume"),
-      };
+    var data = await mongoose.model('revenues').aggregate(aggregate);
+    var info={revenue:0,volume:0};
+    data.forEach(e=>{
+        info.revenue+= getSum(e.data, "Value"),
+        info.volume+=getSum(e.data, "Volume")
+    })
+    return info;
 }
 getMeetingDetails = () => {
     return 1;
@@ -46,6 +48,4 @@ module.exports = async (dialog, sel) => {
         return dialog.replace('550000', info.revenue)
   
     }
-  
-
 }

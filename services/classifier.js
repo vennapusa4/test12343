@@ -3,7 +3,19 @@ var accountNames=["PIMCO","RAMCO","MIMCO","FRANKLIN"];
 var productName=["G10 Revenue","Electronic","Emerging Markets"];
 var years=[2017,2018,2019];
 var followups=["same for","me the same","What about"];
-var requestedDetails=["revenue","volume"]
+var requestedDetails=["revenue","volume","Info"];
+var accountInfoWords={
+    "CitiRepresentative":["CitiRepresentative","Citi Representative","Citi Rep"],
+    "CustomerContact":["Customer Contact","Contact Person","point of contact","contact details"],
+    "Meetings":["meet"]
+}
+var meetingInfoWords={
+    "callNotes":["CitiRepresentative","Citi Representative","Citi Rep"],
+    "actionItems":["Customer Contact","Contact Person","point of contact","contact details"],
+    "citiAttendees":["Attendees"]
+}
+
+
 module.exports=(text)=>{
     var selectedData={
         selectedAccount:"",
@@ -51,5 +63,8 @@ module.exports=(text)=>{
         selectedData.rquestedDetails=str.replace(/(^,)|(,$)/g, "");
         str=""
     }
+
+
+
 return selectedData;
 };
