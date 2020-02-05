@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 // Import required Bot Framework classes.
-const { ActionTypes, ActivityHandler, CardFactory } = require('botbuilder');
+const { ActionTypes, ActivityHandler, CardFactory,builder } = require('botbuilder');
 
 // Welcomed User property name
 const WELCOMED_USER = 'welcomedUserProperty';

@@ -20,10 +20,12 @@ getRevenue = async (sel) => {
     var years = sel.selectedYear.split(",").map(Number).filter(Boolean);
     var products = sel.selectedProduct.split(",").filter(Boolean);
     var aggregate = [
-        sel.selectedAccount!=""?{ $match: { AccountName: sel.selectedAccount } }:null,
+        sel.selectedAccount!="all"?{ $match: { AccountName: sel.selectedAccount } }:null,
     { $unwind: '$data' },
-    years.length ? { $match: { "data.Year": { $in: years } } } : null,
-    products.length ? { $match: { "data.Name": { $in: products } } } : null,
+    // years.length ? { $match: { "data.Year": { $in: years } } } : null,
+    // products.length ? { $match: { "data.Name": { $in: products } } } : null,
+    sel.selectedYear!="all"? { $match: { "data.Year": parseInt(sel.selectedYear) } } : null,
+    sel.selectedProduct!="all"?{ $match: { "data.Name": sel.selectedProduct } } : null,
     { $group: { _id: '$_id', data: { $push: '$data' } } }].filter(Boolean);
     var data = await mongoose.model('revenues').aggregate(aggregate);
     var info={revenue:0,volume:0};
@@ -40,12 +42,25 @@ getInfo = () => {
     return 1;
 }
 module.exports = async (dialog, sel) => {
-    if (sel.rquestedDetails=="") {
+    substrings=["revenue","volume"]
+    if (new RegExp(substrings.join("|")).test(sel.requestedDetails.toLocaleLowerCase())) {
+        // At least one 
+        var data=[];
+        await Promise.all(sel.data.map(async e=>{
+            var info=await getRevenue(e);
+            var fullinfo={...info,...e}
+              Object.keys(fullinfo).forEach( e=>{
+                if (fullinfo[e]=="all") {
+                       delete fullinfo[e]
+                }
+            });
+
+            data.push(fullinfo);
+        }))
+        return data;
+    }
+    else
         return dialog;
-    }
-    else{
-        var info = await getRevenue(sel);
-        return dialog.replace('550000', info.revenue)
-  
-    }
+    
+    
 }

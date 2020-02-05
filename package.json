@@ -16,8 +16,10 @@
         "url": "https://github.com"
     },
     "dependencies": {
+        "adaptivecards": "^1.2.5",
         "botbuilder": "~4.6.1",
         "dotenv": "^8.2.0",
+        "lodash": "^4.17.15",
         "mongoose": "^5.8.11",
         "natural": "^0.6.3",
         "restify": "~8.4.0",

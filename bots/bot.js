@@ -1,11 +1,66 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityHandler } = require('botbuilder');
+const { ActivityHandler,ActivityTypes} = require('botbuilder');
 const dialog=require("../services/dialogflow");
 const coordianter=require("../services/coordianter");
-const classifier=require('../services/classifier')
+const classifier=require('../services/classifier');
+var AdaptiveCards = require("adaptivecards");
 class EchoBot extends ActivityHandler {
+    getInlineAttachment(data) {
+        var col=[];
+      
+        
+            Object.keys(data[0]).forEach( e=>{
+                var obj1={
+                    type: "Column",
+                    width:"stretch",
+                    items:[]
+               }
+                var obj2 = {
+                    type: "TextBlock",
+                    text: e,
+                }
+                obj1.items.push( {...obj2});
+               
+                col.push({...obj1});
+            })
+            data.forEach((element) => {
+                
+                Object.keys(element).forEach(( e,i)=>{
+                    var obj3 = {
+                        type: "TextBlock",
+                        text: element[e].toString(),
+                    }
+                    col[i].items.push( {...obj3});
+                });
+                
+            })
+          
+        //     var obj2={
+        //         type: "TextBlock",
+        //         text:e,
+
+        //    }
+        //    obj1.items.push( {...obj2});
+           
+      
+        return {
+            name: 'as',
+            contentType:  "application/vnd.microsoft.card.adaptive",
+            content: {
+                "type": "AdaptiveCard",
+                "version": "1.0",
+                "body": [
+                    {
+                        "type": "ColumnSet",
+                        "columns": col
+                    }
+                ]
+            }
+        };
+        
+    }
     constructor() {
         super();
         // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
@@ -13,8 +68,16 @@ class EchoBot extends ActivityHandler {
             var dialogreturn=await dialog(context.activity.text);
             var classiferdata=await classifier(context.activity.text);
             var response=await coordianter(dialogreturn,classiferdata);
-            await context.sendActivity(response);
-
+            if (typeof(response)=="string") {
+                await context.sendActivity(response);
+            }
+            else{
+                const reply = { type: ActivityTypes.Message };
+                reply.text = 'below are the details';
+                reply.attachments = [this.getInlineAttachment(response)];
+                await context.sendActivity(reply);
+            }
+            
             // By calling next() you ensure that the next BotHandler is run.
             await next();
         });

@@ -4,14 +4,15 @@
 const dotenv = require('dotenv');
 const path = require('path');
 const restify = require('restify');
-const classifier=require('./services/classifier')
+const classifier=require('./services/classifier');
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter,UserState, MemoryStorage } = require('botbuilder');
-console.log(classifier('G10 revenue for PIMCO in 2019'));
+console.log(classifier('G10 and Electronic revenue for PIMCO and MIMCO IN 2018 and 2019'));
 // This bot's main dialog.
 const { EchoBot } = require('./bots/bot');
-const {SuggestedActionsBot}=require("./bots/suggestedActionsBot")
+const {WelcomeBot}=require("./bots/welcomeBot");
+const {SuggestedActionsBot}=require("./bots/suggestedActionsBot");
 const memoryStorage = new MemoryStorage();
 const userState = new UserState(memoryStorage);
 // Import required bot configuration.
@@ -58,6 +59,7 @@ adapter.onTurnError = async (context, error) => {
 // Create the main dialog.
 const myBot = new EchoBot();
 
+const bot=new WelcomeBot(userState);
 // Listen for incoming requests.
 server.post('/api/messages', (req, res) => {
     adapter.processActivity(req, res, async (context) => {

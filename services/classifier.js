@@ -1,6 +1,6 @@
 
 var accountNames=["PIMCO","RAMCO","MIMCO","FRANKLIN"];
-var productName=["G10 Revenue","Electronic","Emerging Markets"];
+var productName=["G10","Electronic","Emerging Markets"];
 var years=[2017,2018,2019];
 var followups=["same for","me the same","What about"];
 var requestedDetails=["revenue","volume","Info"];
@@ -18,10 +18,10 @@ var meetingInfoWords={
 
 module.exports=(text)=>{
     var selectedData={
-        selectedAccount:"",
-        selectedYear:"",
-        selectedProduct:"",
-        rquestedDetails:"",
+        selectedAccount:"all",
+        selectedYear:"all",
+        selectedProduct:"all",
+        requestedDetails:"",
         followup:false
     }
     text= text.toLocaleLowerCase();
@@ -60,11 +60,21 @@ module.exports=(text)=>{
         }   
     })
     if (str!="") {
-        selectedData.rquestedDetails=str.replace(/(^,)|(,$)/g, "");
+        selectedData.requestedDetails=str.replace(/(^,)|(,$)/g, "");
         str=""
     }
+var data={
 
-
-
-return selectedData;
+}
+    let result = [];
+        for (let selectedAccount of selectedData.selectedAccount.split(",")) {
+            for (let selectedYear of selectedData.selectedYear.split(",")) {
+                for (let selectedProduct of selectedData.selectedProduct.split(",")) {
+                    result.push({ selectedAccount, selectedYear, selectedProduct });
+                }
+            }
+        }
+data.data=result;
+data.requestedDetails=selectedData.requestedDetails
+return data;
 };
