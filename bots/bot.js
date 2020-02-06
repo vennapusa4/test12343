@@ -11,11 +11,10 @@ class EchoBot extends ActivityHandler {
         data=data.map(e=>{
             var tablecontent={
                 Account:e.selectedAccount,
+                Product:e.selectedProduct,
                 Revenue:e.revenue,
                 Volume:e.volume,
-                Year:e.selectedYear,
-                Product:e.selectedProduct
-
+                Year:e.selectedYear
             }
             Object.keys(tablecontent).forEach( e=>{
                 if (!tablecontent[e]) {
