@@ -3,7 +3,7 @@ var accountNames=["PIMCO","RAMCO","MIMCO","FRANKLIN"];
 var productName=["G10","Electronic","Emerging Markets"];
 var years=[2017,2018,2019];
 var followups=["same for","me the same","What about"];
-var requestedDetails=["revenue","volume","Info"];
+var requestedDetails=["revenue","volume","AccountInfo","MeetingInfo"];
 var accountInfoWords={
     "CitiRepresentative":["CitiRepresentative","Citi Representative","Citi Rep"],
     "CustomerContact":["Customer Contact","Contact Person","point of contact","contact details"],
@@ -21,7 +21,8 @@ module.exports=(text)=>{
         selectedAccount:"all",
         selectedYear:"all",
         selectedProduct:"all",
-        requestedDetails:"",
+        selectedFields:"all",
+        requestedFields:"",
         followup:false
     }
     text= text.toLocaleLowerCase();
@@ -61,6 +62,33 @@ module.exports=(text)=>{
     })
     if (str!="") {
         selectedData.requestedDetails=str.replace(/(^,)|(,$)/g, "");
+        str=""
+    }
+    Object.keys(accountInfoWords).forEach(e1=>{      
+        accountInfoWords[e1].every(e2=>{      
+            if (text.includes(e2.toLocaleLowerCase())) {       
+                str+=e1+",";
+                return false
+            }   
+            else return true;
+        }) 
+    })
+    if (str!="") {
+        selectedData.requestedDetails="AccountInfo"
+        selectedData.requestedFields=str.replace(/(^,)|(,$)/g, "");
+        str=""
+    }
+    Object.keys(meetingInfoWords).forEach(e1=>{      
+        meetingInfoWords[e1].every(e2=>{      
+            if (text.includes(e2.toLocaleLowerCase())) {       
+                str+=e1+",";
+                return false
+            }   
+        }) 
+    })
+    if (str!="") {
+        selectedData.requestedDetails="MeetingInfo"
+        selectedData.requestedFields=str.replace(/(^,)|(,$)/g, "");
         str=""
     }
 var data={

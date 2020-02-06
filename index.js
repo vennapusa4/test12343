@@ -8,7 +8,6 @@ const classifier=require('./services/classifier');
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const { BotFrameworkAdapter,UserState, MemoryStorage } = require('botbuilder');
-console.log(classifier('G10 and Electronic revenue for PIMCO and MIMCO IN 2018 and 2019'));
 // This bot's main dialog.
 const { EchoBot } = require('./bots/bot');
 const {WelcomeBot}=require("./bots/welcomeBot");

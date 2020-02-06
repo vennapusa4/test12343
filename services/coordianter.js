@@ -38,13 +38,31 @@ getRevenue = async (sel) => {
 getMeetingDetails = () => {
     return 1;
 }
-getInfo = () => {
-    return 1;
+getInfo = (e) => {
+    var data = await mongoose.model('accounts').find({Account:e.selectedAccount});
+    return data;
 }
 module.exports = async (dialog, sel) => {
-    substrings=["revenue","volume"]
+    substrings=["revenue","volume"];
     if (new RegExp(substrings.join("|")).test(sel.requestedDetails.toLocaleLowerCase())) {
         // At least one 
+        var data=[];
+        await Promise.all(sel.data.map(async e=>{
+            var info=await getInfo(e);
+            var fullinfo={...info,...e}
+              Object.keys(fullinfo).forEach( e=>{
+                if (fullinfo[e]=="all") {
+                       delete fullinfo[e]
+                }
+            });
+
+            data.push(fullinfo);
+        }))
+        return data;
+    }
+    else if(sel.requestedDetails=="AccountInfo"){
+        if (sel.selectedAccount!="all") {
+            
         var data=[];
         await Promise.all(sel.data.map(async e=>{
             var info=await getRevenue(e);
@@ -58,6 +76,11 @@ module.exports = async (dialog, sel) => {
             data.push(fullinfo);
         }))
         return data;
+        }
+
+    }
+    else if(sel.requestedDetails=="MeetingInfo"){
+
     }
     else
         return dialog;
