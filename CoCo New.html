@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+    background-attachment: fixed;
+    background-image: url(https://images.unsplash.com/photo-1462556791646-c201b8241a94?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1490&q=80);
+
+        }
+        .css-990gl9, [data-css-990gl9]
+        {
+            background-color: inherit !important;
+        }
+
+        #webchat {
+            height: 100%;
+            width: 100%;
+        }
+
+        li.css-1qyo5rb {
+            margin-left: -8px;
+        }
+
+        .css-tyxksf.css-2p02md.from-user {
+            margin-right: 15px !important;
+        }
+
+        .content {
+            margin-right: 5px !important;
+        }
+
+        .css-1dgbgmu.from-user.avatar {
+            margin-left: 3px !important;
+        }
+
+        .css-eycyw2.css-1882x3w.css-1l9a57c {
+            padding-bottom: 15px !important;
+        }
+
+        .css-1dgbgmu>.image,
+        [data-css-1dgbgmu]>.image {
+            height: 100% !important;
+            left: -11px !important;
+            top: 0px !important;
+            border-radius: 69%;
+            border: 0px solid#07dd8f !important;
+            padding: 0px !important;
+            width: 149% !important;
+        }
+
+        .css-tyxksf.css-2p02md {
+            margin-left: 15px !important;
+            margin-right: 15px !important;
+        }
+
+        .css-1tdb3h1>img,
+        [data-css-1tdb3h1]>img {
+            height: auto !important;
+            left: 52% !important;
+            position: absolute !important;
+            top: 50% !important;
+            width: 67% !important;
+            transform: translate(-50%, -50%) !important;
+        }
+
+        .css-2p02md>.content>.webchat__row>.bubble,
+        [data-css-2p02md]>.content>.webchat__row>.bubble {
+            border-radius: 10px;
+            background-color: #d3d3d38c;
+        }
+
+        .css-u4skb7>button:not(:disabled) {
+            border-radius: 20px;
+
+        }
+
+        .css-2p02md:not(.from-user)>.avatar,
+        [data-css-2p02md]:not(.from-user)>.avatar {
+            font-size: 13px;
+        }
+
+        .css-2p02md.from-user>.avatar,
+        [data-css-2p02md].from-user>.avatar {
+            font-size: 14px;
+        }
+
+        /* .css-nil {
+         padding-left: 47px;
+      } */
+
+        .css-eycyw2>.main {
+            background-color: white;
+            min-height: 40px;
+            -webkit-box-align: stretch;
+            align-items: stretch;
+            border-top: 1px solid rgb(230, 230, 230);
+            padding-bottom: 10px;
+        }
+
+        .css-1dgbgmu,
+        [data-css-1dgbgmu] {
+            background-color: #07dd8f !important;
+        }
+
+        .css-u4skb7>button:not(:disabled),
+        [data-css-u4skb7]>button:not(:disabled) {
+            color: #07dd8f !important;
+            border-color: #07dd8f !important;
+        }
+
+        .css-eycyw2>.main,
+        [data-css-eycyw2]>.main {
+            padding-bottom: 0px !important;
+        }
+
+        /* .css-1t62idy,
+        [data-css-1t62idy] {
+            padding-right: 17px !important;
+            padding-top: 7px !important;
+        } */
+
+        .css-115fwte,
+        [data-css-115fwte] {
+            padding-right: 51px !important;
+            padding-top: 5px !important;
+        }
+        .css-cf1ppa:not(.from-user), [data-css-cf1ppa]:not(.from-user) {
+    background-color:inherit !important
+}
+.css-cf1ppa.from-user, [data-css-cf1ppa].from-user {
+    background-color: inherit !important
+}
+
+.css-1tdb3h1>img{
+    width: 93% !important;
+}
+.css-cf1ppa.from-user>div>img{
+    width: 120% !important;
+}
+.css-fawxas:not(.from-user) > .webchat__bubble__content, [data-css-fawxas]:not(.from-user) > .webchat__bubble__content{
+    background-color: #3A76D7 !important;
+    border: none !important;
+    color: white !important;
+}
+.css-fawxas.from-user > .webchat__bubble__content, [data-css-fawxas].from-user > .webchat__bubble__content {
+    background-color: #00CED1 !important;
+    border: none !important;
+    color: white !important;
+}
+    </style>
+</head>
+
+<body style="overflow: hidden;">
+    <div id="webchat" role="main"></div>
+    <!-- <script src="https://cdn.botframework.com/botframework-webchat/master/webchat-es5.js"></script> -->
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/CognitiveServices.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/pbkdf2.js"></script>
+    <script>
+
+        (async function () {
+            const styleSet = window.WebChat.createStyleSet({
+                'css-2p02md.from-user > .avatar': 'rgba(0, 0, 255, .1)'
+            });
+
+            var d1 = window.WebChat.createDirectLine({
+                token: 'T62a9VY236A.qsnUVezfwlNqOy-yIxGeASrOu8I-YvMYfACeSZZymxk' //CoCo Bot
+            });
+
+            let subscriptionKey = 'ed8c03b6776d466e957d537275567c5a';
+            let webSpeechPonyfillFactory = await window.WebChat.createCognitiveServicesSpeechServicesPonyfillFactory({
+                region: 'eastus',
+                subscriptionKey,
+                textNormalization: 'lexical'
+            });
+
+            //============================================================================================
+            var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+            function SpeakText() {
+                var msg = new SpeechSynthesisUtterance();
+                window.speechSynthesis.speak(msg);
+                document.getElementsByClassName("wc-mic")[0].removeEventListener("click", SpeakText);
+            }
+
+            if (isSafari) {
+                window.addEventListener("load", function () {
+                    document.getElementsByClassName("wc-mic")[0].addEventListener("click", SpeakText);
+                });
+            }
+
+            // Needed to change between the two audio contexts
+            var AudioContext = window.AudioContext || window.webkitAudioContext;
+            // Sets the old style getUserMedia to use the new style that is supported in more browsers even though the framework uses the new style
+            if (window.navigator.mediaDevices.getUserMedia && !window.navigator.getUserMedia) {
+                window.navigator.getUserMedia = function (constraints, successCallback, errorCallback) {
+                    window.navigator.mediaDevices.getUserMedia(constraints)
+                        .then(function (e) {
+                            successCallback(e);
+                        })
+                        .catch(function (e) {
+                            errorCallback(e);
+                        });
+                };
+            }
+
+            //============================================================================================
+
+            window.WebChat.renderWebChat({
+                directLine: Object.assign(d1),
+                webSpeechPonyfillFactory,
+                sendTypingIndicator: true,
+                userid: 'user',
+                username: "John",
+                styleOptions: {
+                    userAvatarImage: "https://img.icons8.com/plasticine/4x/user.png",
+                    botAvatarImage: 'http://cocoai.herokuapp.com/static/media/logo.3d77c65e.png',
+                   
+
+                },
+                botid: "Bria",
+                botname: "BRIA",
+                webSocket: true
+
+            },
+                document.getElementById('webchat'));
+            // var activity = {
+            //     from: {
+            //         id: 'user',
+            //         name: "John"
+            //     },
+            //     name: 'requestWelcomeDialog',
+            //     type: 'event',
+            //     value: {
+            //         "userEmail": "john@xyz.com"
+            //     },
+            //     channelData: {
+            //         "personId": 'user',
+            //         "environment": window.location.host
+            //     }
+            // };
+
+            // d1.postActivity(activity).subscribe(function (id) {
+            //     if (console) {
+            //         console.log('"trigger requestWelcomeDialog" sent');
+            //     }
+            // });
+
+        })().catch(err => console.error(err));
+    </script>
+</body>
+
+</html>

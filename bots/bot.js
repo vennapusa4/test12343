@@ -33,6 +33,7 @@ class EchoBot extends ActivityHandler {
                 var obj2 = {
                     type: "TextBlock",
                     text: e,
+                    "weight": "bolder"
                 }
                 obj1.items.push( {...obj2});
                
@@ -81,7 +82,7 @@ class EchoBot extends ActivityHandler {
             }
             else{
                 const reply = { type: ActivityTypes.Message };
-                reply.text = 'below are the details';
+                reply.text = 'Below are the details';
                 reply.attachments = [this.getInlineAttachment(response)];
                 await context.sendActivity(reply);
             }
