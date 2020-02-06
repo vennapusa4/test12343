@@ -2,6 +2,7 @@
 var accountNames=["PIMCO","RAMCO","MIMCO","FRANKLIN"];
 var productName=["G10","Electronic","Emerging Markets"];
 var years=[2017,2018,2019];
+
 var followups=["same for","me the same","What about"];
 var requestedDetails=["revenue","volume","AccountInfo","MeetingInfo"];
 var accountInfoWords={
