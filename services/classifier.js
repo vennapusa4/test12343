@@ -23,6 +23,7 @@ module.exports=(text)=>{
         selectedYear:"all",
         selectedProduct:"all",
         selectedFields:"all",
+        requestedDetails:"",
         requestedFields:"",
         followup:false
     }
@@ -65,33 +66,33 @@ module.exports=(text)=>{
         selectedData.requestedDetails=str.replace(/(^,)|(,$)/g, "");
         str=""
     }
-    Object.keys(accountInfoWords).forEach(e1=>{      
-        accountInfoWords[e1].every(e2=>{      
-            if (text.includes(e2.toLocaleLowerCase())) {       
-                str+=e1+",";
-                return false
-            }   
-            else return true;
-        }) 
-    })
-    if (str!="") {
-        selectedData.requestedDetails="AccountInfo"
-        selectedData.requestedFields=str.replace(/(^,)|(,$)/g, "");
-        str=""
-    }
-    Object.keys(meetingInfoWords).forEach(e1=>{      
-        meetingInfoWords[e1].every(e2=>{      
-            if (text.includes(e2.toLocaleLowerCase())) {       
-                str+=e1+",";
-                return false
-            }   
-        }) 
-    })
-    if (str!="") {
-        selectedData.requestedDetails="MeetingInfo"
-        selectedData.requestedFields=str.replace(/(^,)|(,$)/g, "");
-        str=""
-    }
+    // Object.keys(accountInfoWords).forEach(e1=>{      
+    //     accountInfoWords[e1].every(e2=>{      
+    //         if (text.includes(e2.toLocaleLowerCase())) {       
+    //             str+=e1+",";
+    //             return false
+    //         }   
+    //         else return true;
+    //     }) 
+    // })
+    // if (str!="") {
+    //     selectedData.requestedDetails="AccountInfo"
+    //     selectedData.requestedFields=str.replace(/(^,)|(,$)/g, "");
+    //     str=""
+    // }
+    // Object.keys(meetingInfoWords).forEach(e1=>{      
+    //     meetingInfoWords[e1].every(e2=>{      
+    //         if (text.includes(e2.toLocaleLowerCase())) {       
+    //             str+=e1+",";
+    //             return false
+    //         }   
+    //     }) 
+    // })
+    // if (str!="") {
+    //     selectedData.requestedDetails="MeetingInfo"
+    //     selectedData.requestedFields=str.replace(/(^,)|(,$)/g, "");
+    //     str=""
+    // }
 var data={
 
 }
