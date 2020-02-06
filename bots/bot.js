@@ -8,6 +8,15 @@ const classifier=require('../services/classifier');
 var AdaptiveCards = require("adaptivecards");
 class EchoBot extends ActivityHandler {
     getInlineAttachment(data) {
+
+        data=data.map(e=>{
+            return{
+                AccountName:e.selectedAccount,
+                Revenue:e.revenue,
+                Volume:e.volume
+
+            }
+        })
         var col=[];
       
         
@@ -54,7 +63,10 @@ class EchoBot extends ActivityHandler {
                 "body": [
                     {
                         "type": "ColumnSet",
-                        "columns": col
+                        "backgroundImage":
+                        {"url": "https://images.pexels.com/photos/326311/pexels-photo-326311.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"}
+                       
+                       ,"columns": col
                     }
                 ]
             }
