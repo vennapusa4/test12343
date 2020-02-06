@@ -8,18 +8,22 @@ const classifier=require('../services/classifier');
 var AdaptiveCards = require("adaptivecards");
 class EchoBot extends ActivityHandler {
     getInlineAttachment(data) {
-
         data=data.map(e=>{
-            return{
-                AccountName:e.selectedAccount,
+            var tablecontent={
+                Account:e.selectedAccount,
                 Revenue:e.revenue,
-                Volume:e.volume
+                Volume:e.volume,
+                Year:e.selectedYear,
+                Product:e.selectedProduct
 
             }
+            Object.keys(tablecontent).forEach( e=>{
+                if (!tablecontent[e]) {
+                       delete tablecontent[e]
+                }})
+                return tablecontent;
         })
-        var col=[];
-      
-        
+        var col=[];   
             Object.keys(data[0]).forEach( e=>{
                 var obj1={
                     type: "Column",
@@ -45,14 +49,6 @@ class EchoBot extends ActivityHandler {
                 });
                 
             })
-          
-        //     var obj2={
-        //         type: "TextBlock",
-        //         text:e,
-
-        //    }
-        //    obj1.items.push( {...obj2});
-           
       
         return {
             name: 'as',
