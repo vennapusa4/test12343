@@ -1,11 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityHandler,ActivityTypes} = require('botbuilder');
+const { ActivityHandler,ActivityTypes,MessageFactory} = require('botbuilder');
 const dialog=require("../services/dialogflow");
-const coordianter=require("../services/coordianter");
-const classifier=require('../services/classifier');
-var AdaptiveCards = require("adaptivecards");
+const question = {
+    name: 'name',
+    age: 'age',
+    date: 'date',
+    none: 'none'
+};
 class EchoBot extends ActivityHandler {
     getInlineAttachment(data) {
         data=data.map(e=>{
@@ -71,19 +74,26 @@ class EchoBot extends ActivityHandler {
     }
     constructor() {
         super();
+        
         // See https://aka.ms/about-bot-activity-message to learn more about the message and other activity types.
         this.onMessage(async (context, next) => {
             var dialogreturn=await dialog(context.activity.text);
-            var classiferdata=await classifier(context.activity.text);
-            var response=await coordianter(dialogreturn,classiferdata);
-            if (typeof(response)=="string") {
-                await context.sendActivity(response);
+            if (dialogreturn.result.fulfillment.messages.length==1) {
+                await context.sendActivity(dialogreturn.result.fulfillment.messages[0].speech);
             }
-            else{
-                const reply = { type: ActivityTypes.Message };
-                reply.text = 'Below are the details';
-                reply.attachments = [this.getInlineAttachment(response)];
-                await context.sendActivity(reply);
+            else if(dialogreturn.result.fulfillment.messages.length>1){
+                dialogreturn.result.fulfillment.messages.forEach(async e=>{
+                    await context.sendActivity(e.speech);
+                })
+                var payload=   dialogreturn.result.fulfillment.messages.find( e=>{
+                    if (e.payload) {
+                        return e
+                    }
+                })
+                if (payload) {
+                    await this.sendSuggestedActions(context,payload.payload.suggestions);
+                }
+               
             }
             
             // By calling next() you ensure that the next BotHandler is run.
@@ -101,6 +111,13 @@ class EchoBot extends ActivityHandler {
             await next();
         });
     }
+
+    async sendSuggestedActions(turnContext,suggestions) {
+        var reply = MessageFactory.suggestedActions(suggestions);
+        await turnContext.sendActivity(reply);
+    }
+
+ 
 }
 
 module.exports.EchoBot = EchoBot;

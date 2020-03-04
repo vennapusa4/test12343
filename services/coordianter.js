@@ -6,7 +6,7 @@ const meet = mongoose.model('meetings');
 const account = mongoose.model('accounts');
 const revenue = mongoose.model('revenues');
 
-mongoose.connect("mongodb://ravi:Ravi%401994@cluster0-shard-00-00-jdpev.mongodb.net:27017,cluster0-shard-00-01-jdpev.mongodb.net:27017,cluster0-shard-00-02-jdpev.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority", (e) => {
+var connection=mongoose.connect("mongodb://ravi:010816@cluster0-shard-00-00-jdpev.mongodb.net:27017,cluster0-shard-00-01-jdpev.mongodb.net:27017,cluster0-shard-00-02-jdpev.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority", (e,db) => {
     console.log(e,"dd");
 })
 
