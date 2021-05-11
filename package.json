@@ -20,7 +20,7 @@
         "botbuilder": "~4.6.1",
         "brain.js": "^2.0.0-alpha.12",
         "dotenv": "^8.2.0",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.21",
         "mongoose": "^5.8.11",
         "natural": "^0.6.3",
         "restify": "~8.4.0",
